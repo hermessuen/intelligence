@@ -1,7 +1,7 @@
 baseURL = 'http://example.org/'
 languageCode = 'en-us'
 title = 'A quest to understand intelligence and friendship'
-theme = 'blackburn'
+theme = 'ananke'
 
 
 [menu]
