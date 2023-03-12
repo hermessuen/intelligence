@@ -13,5 +13,5 @@ theme_version: '2.8.2'
 ##### In the beginner's mind there are many possibilities, but in the expert's there are few. - Shunryo Suzuki
 
 ![](/images/astronaut.png "Dall-E")
-![](http://hermessuen.github.io/intelligence/astronaut.png "Dall-E")
+![](https://hermessuen.github.io/intelligence/astronaut.png "Dall-E")
 
