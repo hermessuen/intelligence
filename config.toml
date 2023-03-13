@@ -3,10 +3,17 @@ languageCode = 'en-us'
 title = 'A journey amongst friends'
 theme = 'ananke'
 contentDir = "content"
-resourceDir = "resources"
+
 
 DefaultContentLanguage = "en"
 SectionPagesMenu = "main"
 Paginate = 3 # this is set low for demonstrating with dummy content. Set to a higher number
 googleAnalytics = ""
 enableRobotsTXT = true
+
+[params]
+  text_color = ""
+  author = ""
+  favicon = ""
+  site_logo = ""
+  recent_posts_number = 3
