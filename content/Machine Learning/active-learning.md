@@ -1,7 +1,7 @@
 ---
 title: "Active Learning"
 date: 2023-03-28T00:07:04-08:00
-draft: true
+draft: false
 ---
 
 # What is Active Learning?
