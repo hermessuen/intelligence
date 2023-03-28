@@ -6,12 +6,16 @@ draft: true
 
 # What is Active Learning?
 
-- **Def:** Active learning is a type of semi-supervised learning in which the learning algorithm selects unlabeled data points to be annotated by the user.
-- **Algo:**
-    1. Start with a small labeled dataset
-    2. At each iteration, pick a set of unlabeled data points according to metric S. Label those points and train a new model
-    3. Repeat step 2
-- **Motivation:** The main motivation for active learning is data efficiency. When facing large unlabeled data, the cost associated with annotating those data could be huge. Active learning allows the model to achieve the same performance by annotating only a subset of data.
+Active learning is a type of semi-supervised learning in which the learning algorithm selects unlabeled data points to be annotated by the user. It is semi-supervised because the model is trained on both labeled and unlabled data. 
+
+The primary motivation for active learning is data efficiency. When facing large unlabeled data, the cost associated with annotating the entire dataset could be huge. Active learning allows the model to achieve the same performance by annotating only a subset of data.
+
+The general algorithm for active learning involves:
+1. Start with a small labeled dataset.
+2. At each iteration, pick a set of unlabeled data points according to metric S. Label those points and train a new model.
+3. Repeat step 2 for a certain number of iterations or until some termination condition has been met.
+
+Two major questions to consider are 1) how are data queried? and 2) what is the query criteria. In this post we discuss three types of querying approaches (stream-based, pool-based, and membership synthesis) and two types of querying criterion (uncertainty sampling and balance exploration and exploitation).
 
 # Three Categories of Active Sampling
 
@@ -50,6 +54,8 @@ Several measures of uncertainy are available for uncertainty sampling. Here we d
 
 ![Untitled](Active%20Learning%20c3e79bd0e5624b6aa536f2b85085e0b9/Untitled%201.png)
 
+- **Con:**: Although better than least confidence, margin sampling apparently only takes into account the top 2 classes and disregards the rest of the classes. Depending on the specific use case, margin sampling might be sufficient, or you might want to use entropy instead. 
+
 ### Entropy
 
 - High entropy: the model distributes equally the probability for all classes as it is not certain at all which class that data point belongs to.
@@ -59,16 +65,16 @@ Several measures of uncertainy are available for uncertainty sampling. Here we d
 
 # **Balance Exploration and Exploitation**
 
-- Relation to RL: essentially a question between trading off exploration and exploitation, but not in the action space or state space, but in the data space.
-
 ![Untitled](Active%20Learning%20c3e79bd0e5624b6aa536f2b85085e0b9/Untitled%203.png)
 
-- D(xi): Label density score [EXPLORATION]
-    - **Intuition:** Once a data point is labeled, we don’t want the other data points in its dense neighborhood to be labeled as well, in future iterations.
-- R(xi): Uncertainty score [EXPLOITATION]
-- Balancing the trade off:
-    - At first: $\epsilon$ < 0.5
-    - After a few iterations: $\epsilon$ > 0.5
+- In this approach, we compute a weighted sum of label density score and uncertainty score.
+	- D(xi): Label density score [EXPLORATION]
+    	- **Intuition:** Once a data point is labeled, we don’t want the other data points in its dense neighborhood to be labeled as well, in future iterations.
+	- R(xi): Uncertainty score [EXPLOITATION]
+		- This could be any one of the uncertainty measures discussed in the previous section. 
+- In other words, we frame the problem of exploring the unlabeled dataset as a trade-off between exploration of exploitation. This is similar to the epsilon-greedy algorithm in RL, except that it's taking place in the data space instead of the action space or the state space. 
+    - At first, we want to set $\epsilon$ < 0.5 because a good amount of the data space is unexplored. What's more, the current model does not have a very good understanding of its prediction accuracy, thus the confidence scores the model outputs could be flawed.
+    - After a few iterations, we want to steadily increase $\epsilon$ to greater than 0.5 as the model starts to output more accurate confidence scores. 
 
 # References
 
